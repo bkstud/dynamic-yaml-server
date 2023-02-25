@@ -1,0 +1,29 @@
+[
+	{
+		"_id" : "5c6ac48b4fd3e24814344a91",
+		"type" : "header",
+		"name" : "dearAnonymous",
+		"text" : "<dir><h5>Dear user</h5>"
+	},
+	{
+		"_id" : "5c6ac48b4fd3e24814344a95",
+		"type" : "footer",
+		"name" : "bestRegardsAnonymous",
+		"text" : [
+			"<dir><h5>Best regards,</h5>",
+			"</dir><h3>Company Office</h3>"
+			"</dir></br>This message was sent automatically, please do not reply."
+		]
+	},
+	{
+		"_id" : "5c6ac48b4fd3e24814344a96",
+		"type" : "content",
+		"name" : "exampleContent",
+		"text" : [
+			"<p style='font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;'>",
+			"You have specified the e-mail adress: <b>{{context.mail}}</b> as your contact e-mail.</p><br>",
+			"<p style='font-size:14px;font-weight:normal;margin:0;Margin-bottom:15px;'>",
+			"Please, click on this link to confirm your e-mail adress:</p>{{context.link}}<br><br>"
+		]
+	}
+]

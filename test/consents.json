@@ -1,0 +1,14 @@
+{
+	"registerConsentText": [
+		"I consent to the processing of my personal data for registration in ",
+		"the system in accordance with the Regulation of the European Parliament and of the\n Council (EU)",
+		"2016/679 of 27 April 2016 and in accordance with the\n information clause attached to my consent."
+	],
+	"teamShareConsentText": [
+		"I consent to providing my personal data (name, surname, e-mail) to ",
+		"other users of the system \n in order to enable possibility to be selected as a member of the team\n -\n",
+		"<span class='red--text'>Lack of consent results in the inability to be invited to the research team.\n</span>"
+	],
+	"communicationConsentText": "I agree to receive (by e-mail) information about system events.",
+	"wishesConsentText": "I agree to receive (by e-mail) occasional wishes"
+}

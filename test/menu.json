@@ -1,0 +1,44 @@
+{
+    "_id" : "5d690af64d02ab31f414965e",
+    "name" : "menu",
+    "config" : [ 
+        {
+            "title" : "Home",
+            "icon" : "dashboard",
+            "href" : "/home",
+            "permission" : "READ_HOME"
+        }, 
+        {
+            "title" : "Profile",
+            "icon" : "person",
+            "child" : [ 
+			    {
+                    "title" : "My profile",
+                    "href" : "/profile/own",
+                    "permission" : "READ_OWN_PROFILE"
+                }, 
+                {
+                    "title" : "Reports",
+                    "href" : "/reports/own",
+                    "permission" : "READ_OWN_REPORTS"
+                }
+            ]
+        },
+		{
+            "title" : "Manager",
+            "icon" : "security",
+            "child" : [ 
+                {
+                    "title" : "Users",
+                    "href" : "/manage/users",
+                    "permission" : "READ_USERS_MANAGER"
+                }, 
+                {
+                    "title" : "Reports",
+                    "href" : "/manage/reports",
+                    "permission" : "READ_REPORTS_MANAGER"
+                }, 
+			]
+		}
+	]
+}
