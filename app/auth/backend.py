@@ -25,6 +25,8 @@ class AuthenticationBackend(AuthenticationInterface):
     async def authenticate(
         self, conn: HTTPConnection,
     ):
+        # TODO: parametrize method for gettign token could be cookie, header,
+        # param also add name reading from config
         token_header = APIKeyHeader(name="token", auto_error=False)
         token = await token_header(conn)
         if not token:
