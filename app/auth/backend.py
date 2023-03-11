@@ -31,5 +31,5 @@ class AuthenticationBackend(AuthenticationInterface):
         token = await token_header(conn)
         if not token:
             raise AuthenticationError("Token missing")
-        validate(token)
-        return True
+        return validate(token)
+        

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Union
 
 from jose import JWTError, jwt
-from starlette.authentication import AuthenticationError
+from starlette.authentication import AuthenticationError, SimpleUser
 
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
@@ -11,11 +11,13 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def validate(token: str) -> bool:
+    decoded = None
     try:
-        jwt.decode(token, SECRET_KEY)
+        decoded = jwt.decode(token, SECRET_KEY)
     except JWTError as jwt_err:
         raise AuthenticationError(str(jwt_err))
-    return True
+    user = SimpleUser(decoded.get("user", "jwt token"))
+    return decoded, user
 
 
 def create_access_token(data: dict,
