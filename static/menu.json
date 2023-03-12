@@ -37,7 +37,7 @@
                     "title" : "Reports",
                     "href" : "/manage/reports",
                     "permission" : "READ_REPORTS_MANAGER"
-                }, 
+                }
 			]
 		}
 	]

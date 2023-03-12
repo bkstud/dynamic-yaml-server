@@ -1,6 +1,6 @@
 # Python static json server
 ## What is it?
-This is (will be) a simple service that allows you to serve static YAML files. <br>
+This is (will be) a simple service that allows you to serve static json or yaml files. <br>
 
 It will have preprocessing of given json to check if they do not contain mistakes. <br>
 

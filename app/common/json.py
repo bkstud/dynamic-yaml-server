@@ -1,9 +1,47 @@
 "For storing json related processors and helper functions."
+import copy
 import json
+import re
 
 
-def search_text_entries(input_dict: dict):
-    pass
+def stringify_text_entries_deep(input_: dict,
+                                keyword="text",
+                                delimiter="\n",
+                                exact_match=False) -> dict:
+    out = copy.deepcopy()
+    stringify_text_entries_shallow(keyword, delimiter, exact_match)
+    return out
+
+
+def stringify_text_entries_shallow(input_: dict,
+                                   keyword="text",
+                                   delimiter="",
+                                   exact_match=False) -> bool:
+    """Search and replace dict 'keyword' string array into multiline string.
+
+    This function will replace string dictionary arrays like
+    {"text": ["foo", "bar]} -> {"text": "foobar"]}
+    """
+    def _is_str_list(obj):
+        return type(obj) is list and \
+               all([type(it) is str for it in obj])
+
+    changed = False
+    stack = [input_]
+    while stack:
+        top = stack.pop()
+        if type(top) is dict:
+            for k, v in top.items():
+                if type(k) is str and \
+                   re.match(keyword, k) and \
+                   _is_str_list(v):
+                    changed = True
+                    top[k] = delimiter.join(v)
+                elif type(v) is dict:
+                    stack.append(v)
+                elif type(v) is list:
+                    stack += v
+    return changed
 
 
 def process_json(input_file: str,
@@ -25,7 +63,13 @@ def process_json(input_file: str,
     """
     json_ = None
     with open(input_file, "r") as infile:
-        json_ = json.load(infile)
+        try:
+            json_ = json.load(infile)
+        except json.decoder.JSONDecodeError as exc:
+            # TODO: to be logged
+            print(exc)
+            return False
+
     with open(output_file, "w") as outfile:
         json.dump(json_, outfile)
 
