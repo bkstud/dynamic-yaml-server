@@ -28,6 +28,7 @@ class AuthenticationBackend(AuthenticationInterface):
         # TODO: parametrize method for gettign token could be cookie, header,
         # param also add name reading from config
         token_header = APIKeyHeader(name="token", auto_error=False)
+        print(token_header)
         token = await token_header(conn)
         if not token:
             raise AuthenticationError("Token missing")
