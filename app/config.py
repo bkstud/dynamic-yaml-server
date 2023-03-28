@@ -26,7 +26,19 @@ class Settings(BaseSettings):
     logger: str = "logging"
     log_level: str = "INFO"
     service_name: str = "json_server"
-    secret_token: str = default_token_generator()
+
+    secret_key: str = default_token_generator()
+
+    # TODO: Lets make auth method for now to have 2 options
+    # one is jwt token based, second will be single token comparison
+    auth_method: str = "jwt"
+    jwt_algorithm: str = "HS256"
+    jwt_token_exipre: int = 30
+
+    share_content_input_dir: str = "./static"
+    share_content_output_dir: str = "./share"
+
+    key_name: str = ""
 
     fastapi_app: str = None  # e.g. "project.server.app", where app = FastAPI()
 
