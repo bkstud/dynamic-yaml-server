@@ -2,9 +2,10 @@ from fastapi.security import APIKeyHeader
 from starlette.authentication import \
     AuthenticationBackend as AuthenticationInterface
 from starlette.authentication import AuthenticationError
+from fastapi.security.utils import get_authorization_scheme_param
 from starlette.requests import HTTPConnection
-
-from app.auth.jwt import validate
+from app.auth.jwt import validate as jwt_validate
+from app.config import settings
 
 
 class AuthenticationBackend(AuthenticationInterface):
@@ -25,12 +26,22 @@ class AuthenticationBackend(AuthenticationInterface):
     async def authenticate(
         self, conn: HTTPConnection,
     ):
-        # TODO: parametrize method for gettign token could be cookie, header,
-        # param also add name reading from config
-        token_header = APIKeyHeader(name="token", auto_error=False)
-        print(token_header)
-        token = await token_header(conn)
-        if not token:
-            raise AuthenticationError("Token missing")
-        return validate(token)
+        auth_header = APIKeyHeader(name="Authorization", auto_error=False)
+        header = await auth_header(conn)
+        if not header:
+            raise AuthenticationError("Missing authorization header.")
+        scheme, creds = get_authorization_scheme_param(header)
+        if not scheme:
+            raise AuthenticationError("Missing authentication scheme.")
+        if not creds:
+            raise AuthenticationError("Mising authentication credentials.")
+        if scheme != "Bearer":
+            raise AuthenticationError("Only bearer authorizaton supported.")
+        validator = jwt_validate
         
+        if settings.auth_method == "jwt":
+            validator = jwt_validate
+        else:
+            raise NotImplementedError()
+
+        return validator(creds)
