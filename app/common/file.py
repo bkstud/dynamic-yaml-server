@@ -16,7 +16,7 @@ def get_files_by_type(dir_: str, ext: str) -> list:
         ext: extension of files to be included will
         result in files such as: '*.ext'
     """
-    return Path(dir_).rglob(f"*.{ext}")
+    return [p.resolve() for p in Path(dir_).rglob(f"*.{ext}")]
 
 
 def prepare_source_structure_and_call_by_ext(source_dir: str,
@@ -27,7 +27,7 @@ def prepare_source_structure_and_call_by_ext(source_dir: str,
     """Prepares source structure copy based on files found with given extension
        and calls given method for them.
     """
-    file_paths = [p.resolve() for p in get_files_by_type(source_dir, ext)]
+    file_paths = get_files_by_type(source_dir, ext)
     if not file_paths:
         return False
 
