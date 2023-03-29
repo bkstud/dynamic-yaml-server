@@ -18,7 +18,7 @@ class Settings(BaseSettings):
 
     For now you could only change the settings
     via APP_<ATTRIBUTE_NAME> environment variables.
-
+    # TODO Update docs with current style
     :param logger: Dotted path to the logger (using this attribute, standard
                    logging methods will be used: logging.debug(), .info(), etc.
     :param log_level: Standard LEVEL for logging (DEBUG/INFO/WARNING/etc.)
@@ -37,6 +37,9 @@ class Settings(BaseSettings):
 
     share_content_input_dir: str = "./static"
     share_content_output_dir: str = "./share"
+
+    # server mode can be static or dynamic
+    server_mode: str = "dynamic"
 
     key_name: str = ""
 

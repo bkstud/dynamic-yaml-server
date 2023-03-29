@@ -6,20 +6,26 @@ from .auth.middleware import AuthenticationMiddleware
 from .auth.jwt import create_access_token
 from .common.shareable import prepare_json_contents
 from .config import settings
+from .router.dynamic import DynamicJsonRouter
 
-print(settings.secret_key)
+
 app = FastAPI()
 
-prepare_json_contents(
-    settings.share_content_input_dir,
-    settings.share_content_output_dir)
 
 app.add_middleware(AuthenticationMiddleware, backend=AuthenticationBackend())
 
 
-static_files_app = StaticFiles(directory="share", follow_symlink=True)
-app.mount("/share", static_files_app, name="static")
+if settings.server_mode == "dynamic":
+    router = DynamicJsonRouter(settings.share_content_input_dir)
+    app.include_router(router, prefix="/share")
+elif settings.server_mode == "static":
+    prepare_json_contents(
+        settings.share_content_input_dir,
+        settings.share_content_output_dir)
+    static_files_app = StaticFiles(directory=settings.share_content_output_dir)
+    app.mount("/share", static_files_app, name="static")
 
+# print example jwt empty token
 print(create_access_token({}))
 
 # # for testing wrong key
