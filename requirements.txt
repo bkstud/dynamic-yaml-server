@@ -1,0 +1,6 @@
+fastapi==0.95.0
+jose==1.0.0
+pydantic==1.10.5
+python_jose==3.3.0
+starlette==0.26.1
+ujson==1.35
