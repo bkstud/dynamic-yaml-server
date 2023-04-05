@@ -36,11 +36,11 @@ class Settings(BaseSettings):
     jwt_token_exipre: int = 30
 
     share_content_input_dir: str = "./static"
-    
+
     # to be used in login to get jwt token
     default_user = ""
     default_password = ""
-    
+
     share_content_output_dir: str = "./share"
 
     # server mode can be static or dynamic
