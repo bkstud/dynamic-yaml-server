@@ -1,0 +1,23 @@
+[
+	{
+		"id" : "5c6ac48b4fd3e24814344a91",
+		"name" : "header",
+		"testname" : "name1",
+		"text" : ["hi\n","hello"]
+	},
+	{
+		"id" : "5c6ac48b4fd3e24814344a95",
+		"type" : "footer",
+		"testname" : "name2",
+		"text" : "Just text"
+	},
+	{
+		"id" : "5c6ac48b4fd3e24814344a96",
+		"name" : "content",
+		"testname" : "name3",
+		"text" : [
+			"Foo Barr",
+            "Bar Foo"
+		]
+	}
+]
