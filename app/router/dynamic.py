@@ -3,12 +3,16 @@ import json
 import pathlib
 from app.common.json import stringify_text_entries_shallow
 from app.common.file import get_files_by_type
+from app.common.utils import logger
 
 
 class DynamicJsonRouter(APIRouter):
 
     @staticmethod
     def create_get_call(in_dict: dict) -> dict:
+        # TODO: Add search parameters GET /emails&name=jakisname ,
+        # /emails&wrongname=name -> should give information that there is not such
+
         def callable():
             return in_dict
         return callable
@@ -25,9 +29,13 @@ class DynamicJsonRouter(APIRouter):
                 try:
                     json_ = json.load(infile)
                 except json.decoder.JSONDecodeError as exc:
-                    # TODO: to be logged
-                    print(exc)
-                    return False
+                    # TODO: Make this exception more verbose
+                    # but service should start even if there is broken json
+                    # TODO: Create special endpoint handling this situastopm
+                    # 50.. something code + json data telling what happened
+                    # wrong 
+                    # {detail: "info about error from json file"}
+                    logger.error(exc)
             stringify_text_entries_shallow(json_)
             self.add_api_route(f"/{api_path}",
                                self.create_get_call(json_))

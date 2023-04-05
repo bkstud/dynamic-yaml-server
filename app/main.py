@@ -7,12 +7,14 @@ from .auth.jwt import create_access_token
 from .common.shareable import prepare_json_contents
 from .config import settings
 from .router.dynamic import DynamicJsonRouter
+from .common.utils import logger
 
 
 app = FastAPI()
 
 
 app.add_middleware(AuthenticationMiddleware, backend=AuthenticationBackend())
+
 
 
 if settings.server_mode == "dynamic":
@@ -25,8 +27,13 @@ elif settings.server_mode == "static":
     static_files_app = StaticFiles(directory=settings.share_content_output_dir)
     app.mount("/share", static_files_app, name="static")
 
-# print example jwt empty token
-print(create_access_token({}))
+
+# # TODO:  /login -> duobackend,someegenerated_password -> jwttoken
+# TODO: Probably this example token should go to file specified in setting
+# Also secret used to sign jwt could go to separate file so that it possibly
+# could be accessed
+logger.info(f"Authorization: Bearer {create_access_token({})}")
+
 
 # # for testing wrong key
 # print(create_access_token({},

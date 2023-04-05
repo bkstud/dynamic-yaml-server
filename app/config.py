@@ -18,12 +18,12 @@ class Settings(BaseSettings):
 
     For now you could only change the settings
     via APP_<ATTRIBUTE_NAME> environment variables.
-    # TODO Update docs with current style
-    :param logger: Dotted path to the logger (using this attribute, standard
-                   logging methods will be used: logging.debug(), .info(), etc.
-    :param log_level: Standard LEVEL for logging (DEBUG/INFO/WARNING/etc.)
+
+    Attributes:
+        log_level: Standard LEVEL for logging (DEBUG/INFO/WARNING/etc.)
+
     """
-    logger: str = "logging"
+    logger: str = "loguru.logger"
     log_level: str = "INFO"
     service_name: str = "json_server"
 
@@ -36,6 +36,11 @@ class Settings(BaseSettings):
     jwt_token_exipre: int = 30
 
     share_content_input_dir: str = "./static"
+    
+    # to be used in login to get jwt token
+    default_user = ""
+    default_password = ""
+    
     share_content_output_dir: str = "./share"
 
     # server mode can be static or dynamic

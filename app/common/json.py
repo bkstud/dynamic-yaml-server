@@ -3,6 +3,8 @@
 import copy
 import json
 
+from app.common.utils import logger
+
 
 def stringify_text_entries_deep(input_: dict,
                                 keyword="text",
@@ -69,8 +71,7 @@ def process_json(input_file: str,
         try:
             json_ = json.load(infile)
         except json.decoder.JSONDecodeError as exc:
-            # TODO: to be logged
-            print(exc)
+            logger.error(exc)
             return False
 
     stringify_text_entries_shallow(json_)

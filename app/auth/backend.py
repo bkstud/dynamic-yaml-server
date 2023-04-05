@@ -9,18 +9,12 @@ from app.config import settings
 
 
 class AuthenticationBackend(AuthenticationInterface):
-    """
-    Own Auth Backend based on Starlette's AuthenticationBackend.
+    """Own Auth Backend based on Starlette's AuthenticationBackend.
 
     Use instance of this class as `backend` argument to `add_middleware` func:
 
-    .. code-block:: python
-
-        app = FastAPI()
-
-        @app.on_event('startup')
-        async def startup():
-            app.add_middleware(AuthenticationMiddleware, backend=AuthBackend())
+    Example:
+        app.add_middleware(AuthenticationMiddleware, backend=AuthBackend())
 
     """
     async def authenticate(
@@ -38,7 +32,7 @@ class AuthenticationBackend(AuthenticationInterface):
         if scheme != "Bearer":
             raise AuthenticationError("Only bearer authorizaton supported.")
         validator = jwt_validate
-        
+
         if settings.auth_method == "jwt":
             validator = jwt_validate
         else:

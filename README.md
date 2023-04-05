@@ -9,7 +9,7 @@ The preprocessing will replace JSON fields named 'text' from array to single mul
 The service should be configurable and allow simple token/jwt or certificate based authentication.
 
 ## Deploying and running
-
+<!-- TODO: Also describe https setup possibly one with dual certificate authorization -->
 ### As docker container
 To be done
 
