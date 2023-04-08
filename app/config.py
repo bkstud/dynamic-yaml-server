@@ -38,8 +38,8 @@ class Settings(BaseSettings):
     share_content_input_dir: str = "./static"
 
     # to be used in login to get jwt token
-    default_user = ""
-    default_password = ""
+    default_user = "duo"
+    default_password = "duo"
 
     share_content_output_dir: str = "./share"
 

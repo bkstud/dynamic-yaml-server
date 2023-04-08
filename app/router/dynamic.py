@@ -57,7 +57,7 @@ class DynamicJsonRouter(APIRouter):
             async def querable_api_data(params: query_model = Depends()):
                 """In case in_ is list of dictionaries"""
                 set_params = params.dict(exclude_none=True)
-                # TODO: Consider if deep properties should be accessable using .
+                # TODO: Consider if deep properties should be accessable using
                 return [el for el in in_
                         if all([el.get(k) == v
                                for k, v in set_params.items()])
