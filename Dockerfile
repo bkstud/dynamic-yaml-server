@@ -5,7 +5,7 @@ WORKDIR /install
 COPY requirements.txt requirements.txt
 RUN apk update && apk add gcc libc-dev
 RUN pip3 install --prefix=/install -r requirements.txt
-RUN pip3 install --prefix=/install gunicorn==20.1.0
+RUN pip3 install --prefix=/install uvicorn[standard]
 
 
 FROM base
@@ -13,4 +13,5 @@ FROM base
 WORKDIR /app
 COPY --from=builder /install /usr/local
 COPY . .
-CMD ["gunicorn", "--host", "0.0.0.0", "app.main:app"]
+
+ENTRYPOINT ["uvicorn", "app.main:app"]
