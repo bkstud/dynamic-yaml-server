@@ -10,8 +10,8 @@ RUN pip3 install --prefix=/install uvicorn[standard]
 
 FROM base
 
-WORKDIR /app
+WORKDIR /
 COPY --from=builder /install /usr/local
-COPY . .
+COPY /app /app
 
 ENTRYPOINT ["uvicorn", "app.main:app"]

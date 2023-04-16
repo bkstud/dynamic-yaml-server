@@ -16,7 +16,7 @@ app.add_api_route("/login", login_for_access_token, methods=["POST"])
 
 if settings.server_mode == "dynamic":
     router = DynamicJsonRouter(settings.share_content_input_dir)
-    app.include_router(router, prefix="/second",
+    app.include_router(router, prefix=settings.api_endpoint_begin,
                        dependencies=[Depends(get_user_from_bearer)])
 elif settings.server_mode == "static":
     app.add_middleware(AuthenticationMiddleware,

@@ -29,12 +29,11 @@ class Settings(BaseSettings):
 
     secret_key: str = default_token_generator()
 
-    # TODO: Lets make auth method for now to have 2 options
-    # one is jwt token based, second will be single token comparison
     auth_method: str = "jwt"
     jwt_algorithm: str = "HS256"
     jwt_token_exipre: int = 30
 
+    api_endpoint_begin: str = "/share"
     share_content_input_dir: str = "./static"
 
     # to be used in login to get jwt token
