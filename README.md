@@ -68,7 +68,7 @@ Example consider `posts.json`:
 ```
 [
     { "id": 1, "title": "py-json-server", "author": "bkstud" },
-    { "id": 2, "title": "post2", "author": "foo" }
+    { "id": 2, "title": "post2", "author": "foo" },
     { "id": 3, "title": "post2", "author": "bar" }
 ]
 ```

@@ -20,7 +20,24 @@ class Settings(BaseSettings):
     via APP_<ATTRIBUTE_NAME> environment variables.
 
     Attributes:
+        logger: logger to be used accross app.
         log_level: Standard LEVEL for logging (DEBUG/INFO/WARNING/etc.)
+        service_name: name to be set for application.
+        secret_key: secret key to be used for JWT encoding/decoding.
+        auth_method: authentication method currently can be JWT bearer.
+                     or None for no auth check at all.
+        jwt_algorithm: algorithm to be used for JWT
+        jwt_token_expire: expiration time for jwt tokens
+        api_endpoint_begin: Makes each contents endpoint to begin
+                            with /api_endpoint_begin/...
+        share_content_input_dir: Directory containing json
+                                 files to be shared by server.
+        default_user: Default user name for getting JWT token via /login.
+        default_password: Default password for getting JWT token via /login.
+        share_content_output_dir: For static server -
+                                  currently not suported please ignore
+        server_mode: dynamic or static currently only dynamic
+                     supports all features.
 
     """
     logger: str = "loguru.logger"
@@ -44,10 +61,6 @@ class Settings(BaseSettings):
 
     # server mode can be static or dynamic
     server_mode: str = "dynamic"
-
-    key_name: str = ""
-
-    fastapi_app: str = None  # e.g. "project.server.app", where app = FastAPI()
 
     class Config:
         env_prefix = "APP_"
