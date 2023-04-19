@@ -80,7 +80,7 @@ GET /posts?title=post2
 
 ## Developing
 ### Local setup without docker
-For app to work properly you need python3.8+ <br>
+For app to work properly you need python 3.8+ <br>
 Install requirements and ASGI server of your choice. 
 I develop with `uvicorn` and Dockerfile is `gunicorn` based.
 
@@ -105,7 +105,25 @@ Run http server on port 8080 and publish to host on the same port. <br>
 This example assumes your json data to share is under directory ./json and you will use default app/share directory for storing it.
 ```
 docker run -p 8080:8080 -v $(pwd)/json:/static/ python-json:latest --host 0.0.0.0 --port 8080
+
+docker run -e APP_=dasd -p 8080:8080 -v $(pwd)/json:/static/ python-json:latest --host 0.0.0.0 --port 8080
 ```
 
 ## Configuration
+### Environment settings
+Each setting should have prefix APP_ example: APP_SECRET_KEY=myExtraSecretKeyThatNobodyKnow <br>
+Currently all settings are of type `str`. <br>
 List of available settings:
+| Name         | Description     | Default value |
+|--------------|-----------|------------|
+| app_title | title name to be set for generated openapi name | "json_server" |
+| SECRET_KEY | secret key to be used for JWT encoding/decoding      | generated based on random 64-bits and BLAKE2B see app/auth/utils.py   |
+| LOG_LEVEL      | Logger for logging (DEBUG/INFO/WARNING/etc.) | "INFO" |
+| LOGGER      | Module to be used for logging purposes | "loguru.logger" |
+| AUTH_METHOD      |  authentication method currently can be JWT bearer or no auth check at all for no auth set it to empty string ("") | "jwt" |
+| JWT_ALGORITHM | algorithm to be used for JWT | "HS256" |
+| JWT_TOKEN_EXPIRE | expiration time for jwt tokens in minutes | "30" |
+| API_ENDPOINT_BEGIN | Makes each contents endpoint to begin with /${API_ENDPOINT_BEGIN}/... | "/share" |
+| SHARE_CONTENT_INPUT_DIR | Directory containing json files to be shared by server. | "./static" |
+| DEFAULT_USER | Default user name for getting JWT token via /login. | "duo" |
+| DEFAULT_PASSWORD | Default password for getting JWT token via /login. | "duo" |

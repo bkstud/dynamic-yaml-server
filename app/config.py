@@ -22,7 +22,6 @@ class Settings(BaseSettings):
     Attributes:
         logger: logger to be used accross app.
         log_level: Standard LEVEL for logging (DEBUG/INFO/WARNING/etc.)
-        service_name: name to be set for application.
         secret_key: secret key to be used for JWT encoding/decoding.
         auth_method: authentication method currently can be JWT bearer.
                      or None for no auth check at all.
@@ -34,6 +33,8 @@ class Settings(BaseSettings):
                                  files to be shared by server.
         default_user: Default user name for getting JWT token via /login.
         default_password: Default password for getting JWT token via /login.
+        app_title: title name to be set for generated openapi name
+
         share_content_output_dir: For static server -
                                   currently not suported please ignore
         server_mode: dynamic or static currently only dynamic
@@ -42,7 +43,7 @@ class Settings(BaseSettings):
     """
     logger: str = "loguru.logger"
     log_level: str = "INFO"
-    service_name: str = "json_server"
+    app_title: str = "json_server"
 
     secret_key: str = default_token_generator()
 
@@ -54,8 +55,8 @@ class Settings(BaseSettings):
     share_content_input_dir: str = "./static"
 
     # to be used in login to get jwt token
-    default_user = "duo"
-    default_password = "duo"
+    default_user: str = "duo"
+    default_password: str = "duo"
 
     share_content_output_dir: str = "./share"
 
