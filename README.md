@@ -116,13 +116,13 @@ Currently all settings are of type `str`. <br>
 List of available settings:
 | Name         | Description     | Default value |
 |--------------|-----------|------------|
-| app_title | title name to be set for generated openapi name | "json_server" |
-| SECRET_KEY | secret key to be used for JWT encoding/decoding      | generated based on random 64-bits and BLAKE2B see app/auth/utils.py   |
+| app_title | Title name to be set for generated openapi name | "json_server" |
+| SECRET_KEY | Secret key to be used for JWT encoding/decoding      | generated based on random 64-bits and BLAKE2B see app/auth/utils.py   |
 | LOG_LEVEL      | Logger for logging (DEBUG/INFO/WARNING/etc.) | "INFO" |
 | LOGGER      | Module to be used for logging purposes | "loguru.logger" |
-| AUTH_METHOD      |  authentication method currently can be JWT bearer or no auth check at all for no auth set it to empty string ("") | "jwt" |
-| JWT_ALGORITHM | algorithm to be used for JWT | "HS256" |
-| JWT_TOKEN_EXPIRE | expiration time for jwt tokens in minutes | "30" |
+| AUTH_METHOD      |  Authentication method currently can be JWT bearer or no auth check at all for no auth set it to empty string ("") | "jwt" |
+| JWT_ALGORITHM | Algorithm to be used for JWT | "HS256" |
+| JWT_TOKEN_EXPIRE | Expiration time for jwt tokens in minutes | "30" |
 | API_ENDPOINT_BEGIN | Makes each contents endpoint to begin with /${API_ENDPOINT_BEGIN}/... | "/share" |
 | SHARE_CONTENT_INPUT_DIR | Directory containing json files to be shared by server. | "./static" |
 | DEFAULT_USER | Default user name for getting JWT token via /login. | "duo" |
