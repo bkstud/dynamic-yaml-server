@@ -77,6 +77,10 @@ You can get filtered response by calling:
 GET /posts?title=py-json-server&author=bkstud
 GET /posts?title=post2
 ```
+### Filter limitations 
+Properties should not start with underscore or they will be ignored. <br>
+Currently deep properties are not supported.
+
 
 ## Developing
 ### Local setup without docker
