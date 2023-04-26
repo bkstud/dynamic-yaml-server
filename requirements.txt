@@ -6,3 +6,4 @@ starlette==0.26.1
 python-multipart==0.0.6
 loguru==0.6.0
 ujson==1.35
+uvicorn==0.20.0

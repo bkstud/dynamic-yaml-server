@@ -86,7 +86,6 @@ I develop with `uvicorn` and Dockerfile is `gunicorn` based.
 
 ```
 pip install -r requirements.txt
-pip install uvicorn[standard]
 # start app with default ip, port
 uvicorn --reload app.main:app
 ```
@@ -104,9 +103,11 @@ If you built docker image from Dockerfile or pulled from docker repo.
 Run http server on port 8080 and publish to host on the same port. <br>
 This example assumes your json data to share is under directory ./json and you will use default app/share directory for storing it.
 ```
+# run http
 docker run -p 8080:8080 -v $(pwd)/json:/static/ python-json:latest --host 0.0.0.0 --port 8080
 
-docker run -e APP_=dasd -p 8080:8080 -v $(pwd)/json:/static/ python-json:latest --host 0.0.0.0 --port 8080
+# run https by providing certificate and key
+docker run -p 8443:8443 -v $(pwd)/static:/static/ -v $(pwd)/tools/certs:/certs  python-json:latest --host 0.0.0.0 --port 8443 --ssl-certfile /certs/server-cert.pem --ssl-keyfile /certs/server-key.pem
 ```
 
 ## Configuration
