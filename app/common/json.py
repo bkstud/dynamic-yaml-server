@@ -50,8 +50,7 @@ def stringify_text_entries_shallow(input_: dict,
 
 
 def process_json(input_file: str,
-                 output_file: str,
-                 convert_text: bool = True) -> bool:
+                 output_file: str) -> bool:
     """Checks validity of json file and processes it before serving.
 
     The processing consists of:
