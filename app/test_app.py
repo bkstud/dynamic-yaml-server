@@ -94,3 +94,68 @@ def test_get_broken_json_no_comma():
         assert response.status_code == 500
         assert "Expecting ',' delimiter" in json_resp["error"]
         assert "broken.json is not valid json" in json_resp["detail"]
+
+
+def test_indexed_json_data():
+    data = [{"name": "test1", "id": 1, "type": "data"},
+            {"name": "test2", "id": 2, "type": "data"},
+            {"name": "test3", "id": 3, "type": "data2"}]
+
+    with tempfile.TemporaryDirectory(dir=".") as tmpdirname:
+        base_path = os.path.join(tmpdirname, "api")
+        os.makedirs(base_path)
+        with open(os.path.join(base_path, "data.json"), "w") as jsonfile:
+            json.dump(data, jsonfile)
+        settings.share_content_input_dir = tmpdirname
+        client_ = make_client()
+        bearer = login_client(client_).json()["access_token"]
+        response_all = client_.get(
+                    f"{settings.api_endpoint_begin}/api/data",
+                    headers={"Authorization": f"Bearer {bearer}"})
+        assert response_all.status_code == 200, response_all.json() == data
+
+        response_type_data = client_.get(
+            f"{settings.api_endpoint_begin}/api/data?type=data",
+            headers={"Authorization": f"Bearer {bearer}"})
+        assert response_type_data.status_code == 200, \
+               response_type_data.json() == data[:2]
+
+        response_type_data2 = client_.get(
+            f"{settings.api_endpoint_begin}/api/data?type=data&id=3",
+            headers={"Authorization": f"Bearer {bearer}"})
+        assert response_type_data2.status_code == 200, \
+               response_type_data2.json() == data[3]
+
+        response_id3 = client_.get(
+            f"{settings.api_endpoint_begin}/api/data?id=3",
+            headers={"Authorization": f"Bearer {bearer}"})
+        assert response_id3.status_code == 200, \
+               response_id3.json() == data[3]
+
+        response_non_existent = client_.get(
+            f"{settings.api_endpoint_begin}/api/data?id=123",
+            headers={"Authorization": f"Bearer {bearer}"})
+        assert response_non_existent.status_code == 200, \
+               response_non_existent.json() == []
+
+
+def test_text_keyword_data():
+    json_content = """
+        {"multiLineText": ["a","b","c","d"],
+         "textualField": ["e", "f","g"]}
+    """
+    with tempfile.TemporaryDirectory(dir=".") as tmpdirname:
+        base_path = os.path.join(tmpdirname, "api", "text")
+        os.makedirs(base_path)
+        with open(os.path.join(base_path, "data.json"), "w") as jsonfile:
+            jsonfile.write(json_content)
+        settings.share_content_input_dir = tmpdirname
+        client_ = make_client()
+        bearer = login_client(client_).json()["access_token"]
+        response = client_.get(
+                    f"{settings.api_endpoint_begin}/api/text/data",
+                    headers={"Authorization": f"Bearer {bearer}"})
+        assert response.status_code == 200
+        json_resp = response.json()
+        assert json_resp["multiLineText"] == "abcd", \
+               json_resp["textualField"] == "efg"
