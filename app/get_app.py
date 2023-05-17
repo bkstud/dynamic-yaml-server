@@ -16,7 +16,7 @@ def get_app():
     dependencies = []
     if settings.auth_method.lower() == "jwt":
         app.add_api_route("/login",
-                            login_for_access_token, methods=["POST"])
+                          login_for_access_token, methods=["POST"])
         dependencies.append(Depends(get_user_from_bearer))
     app.include_router(router, prefix=settings.api_endpoint_begin,
                        dependencies=dependencies)

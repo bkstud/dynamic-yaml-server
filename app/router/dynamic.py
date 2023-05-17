@@ -12,7 +12,8 @@ from .call import create_get_call, json_exception_call
 
 
 class DynamicJsonRouter(APIRouter):
-    "A GET calls router automatically created based on given input directories with json files."
+    """A GET calls router automatically created based
+       on given input directories with json files."""
     def __init__(self, input_directory: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.input_directory = input_directory

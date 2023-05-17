@@ -12,7 +12,7 @@ app_secrets_dir: Optional[str] = os.environ.get(
 )
 
 
-class Settings(BaseSettings): # pylint: disable=too-few-public-methods
+class Settings(BaseSettings):  # pylint: disable=too-few-public-methods
     """
     Configuration settings for this library.
 
@@ -57,8 +57,7 @@ class Settings(BaseSettings): # pylint: disable=too-few-public-methods
 
     share_content_output_dir: str = "./share"
 
-
-    class Config: # pylint: disable=too-few-public-methods
+    class Config:  # pylint: disable=too-few-public-methods
         "BaseSetting config class"
         env_prefix = "APP_"
         secrets_dir = app_secrets_dir
