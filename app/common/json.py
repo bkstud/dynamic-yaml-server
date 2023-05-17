@@ -1,18 +1,8 @@
 "For storing json related processors and helper functions."
 
-import copy
 import json
 
 from app.common.utils import logger
-
-
-def stringify_text_entries_deep(input_: dict,
-                                keyword="text",
-                                delimiter="\n",
-                                exact_match=False) -> dict:
-    out = copy.deepcopy()
-    stringify_text_entries_shallow(keyword, delimiter, exact_match)
-    return out
 
 
 def stringify_text_entries_shallow(input_: dict,
@@ -24,26 +14,26 @@ def stringify_text_entries_shallow(input_: dict,
     {"text": ["foo", "bar]} -> {"text": "foobar"]}
     """
     def _is_str_list(obj):
-        return type(obj) is list and \
-               all([type(it) is str for it in obj])
+        return isinstance(obj, list) and \
+               all(isinstance(it, str) for it in obj)
 
     keywords = ["text", "Text"]
     changed = False
     stack = [input_]
     while stack:
         top = stack.pop()
-        if type(top) is dict:
-            for k, v in top.items():
-                if type(k) is str and \
-                   any([kw in k for kw in keywords]) and \
-                   _is_str_list(v):
+        if isinstance(top, dict):
+            for k, val in top.items():
+                if isinstance(k, str) and \
+                   any(kw in k for kw in keywords) and \
+                   _is_str_list(val):
                     changed = True
-                    top[k] = delimiter.join(v)
-                elif type(v) is dict:
-                    stack.append(v)
-                elif type(v) is list:
-                    stack += v
-        elif type(top) is list:
+                    top[k] = delimiter.join(val)
+                elif isinstance(val, dict):
+                    stack.append(val)
+                elif isinstance(val, list):
+                    stack += val
+        elif isinstance(top, list):
             stack += top
 
     return changed
@@ -66,7 +56,7 @@ def process_json(input_file: str,
         json file and all processing was successfull.
     """
     json_ = None
-    with open(input_file, "r") as infile:
+    with open(input_file, "r", encoding="utf-8") as infile:
         try:
             json_ = json.load(infile)
         except json.decoder.JSONDecodeError as exc:
@@ -75,7 +65,7 @@ def process_json(input_file: str,
 
     stringify_text_entries_shallow(json_)
 
-    with open(output_file, "w") as outfile:
+    with open(output_file, "w", encoding="utf-8") as outfile:
         json.dump(json_, outfile)
 
     return True

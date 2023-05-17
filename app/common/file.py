@@ -1,3 +1,5 @@
+"Common file operations module"
+
 import shutil
 from pathlib import Path
 from typing import Callable, Union
@@ -23,7 +25,7 @@ def prepare_source_structure_and_call_by_ext(source_dir: str,
                                              out_dir: str,
                                              *,
                                              ext: str,
-                                             callable: Callable):
+                                             callable_: Callable):
     """Prepares source structure copy based on files found with given extension
        and calls given method for them.
     """
@@ -41,7 +43,7 @@ def prepare_source_structure_and_call_by_ext(source_dir: str,
         relpath = fpath.parent.relative_to(source_dir)
         cp_file_path = out_dir.joinpath(relpath, fpath.name)
         cp_file_path.parent.mkdir(parents=True, exist_ok=True)
-        callable(fpath, cp_file_path)
+        callable_(fpath, cp_file_path)
 
     return True
 
@@ -58,5 +60,5 @@ def prepare_linking_directory(source_dir: str,
         source_dir=source_dir,
         out_dir=out_dir,
         ext=ext,
-        callable=prepare_symlink_noext
+        callable_=prepare_symlink_noext
     )

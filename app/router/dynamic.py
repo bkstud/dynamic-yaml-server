@@ -1,3 +1,4 @@
+"Dynamic json router"
 import json
 import pathlib
 
@@ -11,7 +12,7 @@ from .call import create_get_call, json_exception_call
 
 
 class DynamicJsonRouter(APIRouter):
-
+    "A GET calls router automatically created based on given input directories with json files."
     def __init__(self, input_directory: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.input_directory = input_directory
@@ -22,7 +23,7 @@ class DynamicJsonRouter(APIRouter):
         for file_, api_path in zip(share_files, relative):
             call_name = f"Get {api_path.name}"
 
-            with open(file_, "r") as infile:
+            with open(file_, "r", encoding="utf-8") as infile:
                 try:
                     json_ = json.load(infile)
                 except json.decoder.JSONDecodeError as exc:

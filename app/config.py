@@ -1,18 +1,18 @@
+"Conifg contains global settings class and instance"
+
 import os
-from pathlib import Path
+from typing import Optional
 
 from pydantic import BaseSettings
-from typing import Optional
+
 from app.auth.utils import default_token_generator
 
 app_secrets_dir: Optional[str] = os.environ.get(
-    "APP_SECRETS_DIR", "/run/secrets"
+    "APP_SECRETS_DIR", None
 )
-if not Path(app_secrets_dir).exists():
-    config_secrets_dir = None
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings): # pylint: disable=too-few-public-methods
     """
     Configuration settings for this library.
 
@@ -37,9 +37,6 @@ class Settings(BaseSettings):
 
         share_content_output_dir: For static server -
                                   currently not suported please ignore
-        server_mode: dynamic or static currently only dynamic
-                     supports all features.
-
     """
     logger: str = "loguru.logger"
     log_level: str = "INFO"
@@ -60,12 +57,11 @@ class Settings(BaseSettings):
 
     share_content_output_dir: str = "./share"
 
-    # server mode can be static or dynamic
-    server_mode: str = "dynamic"
 
-    class Config:
+    class Config: # pylint: disable=too-few-public-methods
+        "BaseSetting config class"
         env_prefix = "APP_"
-        secrets_dir = config_secrets_dir
+        secrets_dir = app_secrets_dir
 
 
 settings = Settings()

@@ -1,3 +1,4 @@
+# pylint: disable=C0116,C0116,W1514
 """End to end tests for app"""
 
 import json

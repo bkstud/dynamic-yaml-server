@@ -1,3 +1,5 @@
+"Call handlers for dynamic router"
+
 from typing import Callable, Optional, Union
 
 from fastapi import Depends
@@ -24,9 +26,9 @@ def create_get_call(in_: Union[dict, list],
     in_dict_schema = None
     out_fn = None
 
-    if type(in_) is dict:
+    if isinstance(in_, dict):
         out_fn = non_queryable_api_data
-    elif type(in_) is list and type(in_[0]) is dict:
+    elif isinstance(in_, list) and len(in_) > 0 and isinstance(in_[0], dict):
         in_dict_schema = in_[0]
     else:
         out_fn = non_queryable_api_data
@@ -41,10 +43,10 @@ def create_get_call(in_: Union[dict, list],
         async def querable_api_data(params: query_model = Depends()):
             """In case in_ is list of dictionaries"""
             set_params = params.dict(exclude_none=True)
-            # TODO: Consider if deep properties should be accessable using dots
+            # TO DO: Consider if deep properties should be accessable using dots
             return [el for el in in_
-                    if all([el.get(k) == v
-                            for k, v in set_params.items()])
+                    if all(el.get(k) == v
+                           for k, v in set_params.items())
                     ]
 
         out_fn = querable_api_data

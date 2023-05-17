@@ -1,3 +1,5 @@
+"App auth utilities functions"
+
 import os
 import hashlib
 

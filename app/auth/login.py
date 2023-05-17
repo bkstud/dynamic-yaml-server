@@ -1,3 +1,5 @@
+"Login related auth functions"
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -7,6 +9,7 @@ from .jwt import create_access_token
 
 
 def authenticate_user(username: str, password: str):
+    "Authenticates user by string comparison"
     if not username or username != settings.default_user:
         return False
     if not password == settings.default_password:
@@ -17,6 +20,7 @@ def authenticate_user(username: str, password: str):
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends()
 ):
+    "Handle login post method"
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(

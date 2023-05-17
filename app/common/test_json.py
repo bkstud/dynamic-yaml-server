@@ -1,15 +1,17 @@
+# pylint: disable=C0116,C0116,W1514
 """Tests for json module"""
 
-import app.common.json as json
+from app.common import json
 
 
 class TestStringify:
+    "Json operations tests class"
     def test_empty_dict(self):
-        in_ = dict()
+        in_ = {}
         assert json.stringify_text_entries_shallow(in_) is False
 
     def test_empty_arr(self):
-        in_ = dict()
+        in_ = {}
         assert json.stringify_text_entries_shallow(in_) is False
 
     def test_dictionary(self):
