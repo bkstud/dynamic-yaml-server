@@ -3,7 +3,7 @@
 from typing import Callable, Optional, Union
 
 from fastapi import Depends
-from pydantic import create_model
+from pydantic import create_model, BaseModel
 
 
 def create_get_call(in_: Union[dict, list],
@@ -23,26 +23,19 @@ def create_get_call(in_: Union[dict, list],
         "In case in_ is non indexable."
         return in_
 
-    in_dict_schema = None
-    out_fn = None
-
-    if isinstance(in_, dict):
-        out_fn = non_queryable_api_data
-    elif isinstance(in_, list) and len(in_) > 0 and isinstance(in_[0], dict):
+    if isinstance(in_, list) and len(in_) > 0 and isinstance(in_[0], dict):
         in_dict_schema = in_[0]
-    else:
-        out_fn = non_queryable_api_data
-
-    if in_dict_schema:
         query_params = {str(k): (Optional[type(v)], None)
                         for k, v in in_dict_schema.items()}
 
-        query_model = create_model("Query", **query_params)
+        query_model: BaseModel = create_model("Query",
+                                              **query_params)  # type: ignore
 
         # return in case in_ a is list of dictonaries with some keys
-        async def querable_api_data(params: query_model = Depends()):
+        async def querable_api_data(
+                params: query_model = Depends()):  # type: ignore
             """In case in_ is list of dictionaries"""
-            set_params = params.dict(exclude_none=True)
+            set_params = params.dict(exclude_none=True)  # type: ignore
             # TO DO: Consider if deep properties
             # should be accessable using dots
             return [el for el in in_
@@ -51,6 +44,8 @@ def create_get_call(in_: Union[dict, list],
                     ]
 
         out_fn = querable_api_data
+    else:
+        out_fn = non_queryable_api_data  # type: ignore
 
     if call_name:
         out_fn.__name__ = call_name

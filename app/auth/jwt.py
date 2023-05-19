@@ -1,6 +1,6 @@
 "Json web token related functions"
 from datetime import datetime, timedelta
-from typing import Union
+from typing import Optional
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -24,7 +24,7 @@ async def get_user_from_bearer(token: str = Depends(oauth2_scheme)) -> str:
         payload = jwt.decode(token,
                              settings.secret_key,
                              algorithms=[settings.jwt_algorithm])
-        username: str = payload.get("sub")
+        username: Optional[str] = payload.get("sub")
         if username is None:
             logger.warning(f"Failed bearer auth try with token '{token}'")
             raise credentials_exception
@@ -36,7 +36,7 @@ async def get_user_from_bearer(token: str = Depends(oauth2_scheme)) -> str:
 
 
 def create_access_token(data: dict,
-                        expires_delta: Union[timedelta, None] = None,
+                        expires_delta: Optional[timedelta] = None,
                         key=settings.secret_key):
     "Creates new signed jwt token with encoded data"
     to_encode = data.copy()

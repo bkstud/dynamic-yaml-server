@@ -1,31 +1,10 @@
 "Common utilities module"
 
-import importlib
 import sys
+from pydoc import locate
 from typing import Any
+
 from app.config import settings
-
-
-def resolve_dotted_path(path: str) -> Any:
-    """Retrieves attribute (var, function, class, etc.) from module by
-    dotted path.
-
-    Example:
-        from datetime.datetime import utcnow as default_utcnow
-        utcnow = resolve_dotted_path('datetime.datetime.utcnow')
-        assert utcnow == default_utcnow
-
-    Args:
-        path: dotted path to the attribute in module
-    Returns
-        Desired attribute or None
-    """
-    splitted = path.split(".")
-    if len(splitted) <= 1:
-        return importlib.import_module(path)
-    module, attr = ".".join(splitted[:-1]), splitted[-1]
-    module = importlib.import_module(module)
-    return getattr(module, attr)
 
 
 def get_logger() -> Any:
@@ -37,7 +16,7 @@ def get_logger() -> Any:
     Returns:
         desired logger (pre-configured if loguru)
     """
-    lib_logger = resolve_dotted_path(settings.logger)
+    lib_logger = locate(settings.logger)
 
     if hasattr(lib_logger, "configure"):
         logger_config = {
