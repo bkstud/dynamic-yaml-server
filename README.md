@@ -1,8 +1,8 @@
 # py-json-server
 ## Overview
-This application allows you to create GET API from directory with yaml files. <br>
+This application allows you to create GET API from directory with JSON files. <br>
 The endpoints are build based on directory structure.  <br>
-The server allows some yaml preprocessing before serving to endpoints. <br> 
+The server allows some JSON preprocessing before serving to endpoints. <br> 
 You can enable bearer token authentication based on JWT tokens. <br>
 This is fastapi based so you get automatically generated opeanapi.json served under `/docs`.
 
