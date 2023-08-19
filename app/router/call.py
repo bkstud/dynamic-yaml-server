@@ -18,7 +18,7 @@ def create_get_call(in_: Union[dict, list],
         callable: fastapi compatible
     """
 
-    # return in case in_ is not indexble array
+    # return in case in_ is not indexable array
     async def non_queryable_api_data():
         "In case in_ is non indexable."
         return in_
@@ -31,13 +31,13 @@ def create_get_call(in_: Union[dict, list],
         query_model: BaseModel = create_model("Query",
                                               **query_params)  # type: ignore
 
-        # return in case in_ a is list of dictonaries with some keys
+        # return in case in_ a is list of dictionaries with some keys
         async def querable_api_data(
                 params: query_model = Depends()):  # type: ignore
             """In case in_ is list of dictionaries"""
             set_params = params.dict(exclude_none=True)  # type: ignore
             # TO DO: Consider if deep properties
-            # should be accessable using dots
+            # should be accessible using dots
             return [el for el in in_
                     if all(el.get(k) == v
                            for k, v in set_params.items())
@@ -56,12 +56,12 @@ def create_get_call(in_: Union[dict, list],
 def json_exception_call(exception: Exception,
                         file_name: str,
                         call_name: Optional[str] = None):
-    """Generates GET handle function in case exception hapened during
+    """Generates GET handle function in case exception happened during
         json loading.
 
     Args:
-        exception: An exception that hapened during json opening
-        name: name of endpoint / json file withouth exception.
+        exception: An exception that happened during json opening
+        name: name of endpoint / json file without exception.
     Returns:
         callable: fastapi compatible
         name: name of the handle method to give to callable
