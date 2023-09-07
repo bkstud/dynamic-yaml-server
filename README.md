@@ -121,7 +121,7 @@ Currently all settings are of type `str`. <br>
 List of available settings:
 | Name         | Description     | Default value |
 |--------------|-----------|------------|
-| app_title | Title name to be set for generated openapi name | "json_server" |
+| TITLE | Title name to be set for generated openapi name | "json_server" |
 | SECRET_KEY | Secret key to be used for JWT encoding/decoding      | generated based on random 64-bits and BLAKE2B see app/auth/utils.py   |
 | LOG_LEVEL      | Logger for logging (DEBUG/INFO/WARNING/etc.) | "INFO" |
 | LOGGER      | Module to be used for logging purposes | "loguru.logger" |
